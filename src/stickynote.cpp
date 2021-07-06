@@ -1,0 +1,88 @@
+#include <stickynote.h>
+
+wxBEGIN_EVENT_TABLE(StickyNote, wxFrame)
+    wxEND_EVENT_TABLE()
+
+        StickyNote::StickyNote(const wxString &title, const wxPoint &pos, const wxSize &size, const long &style) : wxFrame(NULL, wxID_ANY, title, pos, size, style)
+{
+    m_dragging = false;
+    Bind(wxEVT_LEFT_DOWN, &StickyNote::OnMouseDown, this);
+    Bind(wxEVT_MOUSE_CAPTURE_LOST, &StickyNote::OnMouseCaptureLost, this);
+    Bind(wxEVT_RIGHT_DOWN, &StickyNote::OnExit, this);
+    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    SetSizer(sizer);
+    sizer->AddSpacer(size.y * 0.1);
+
+    wxTextCtrl *text = new wxTextCtrl(this, wxID_ANY, "TEST!", wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+
+    wxFont font = text->GetFont();
+    font.SetPointSize(font.GetPointSize() + 1);
+    text->SetFont(font);
+
+    sizer->Add(text, wxSizerFlags().Expand().Proportion(1));
+    // wxButton *button = new wxButton(this, wxID_ANY, "Button");
+    // sizer->Add(button, wxSizerFlags().Expand().Proportion(1));
+}
+
+StickyNote::~StickyNote()
+{
+}
+
+void StickyNote::OnMouseDown(wxMouseEvent &event)
+{
+
+    wxPoint mousePos = event.GetPosition();
+    // drag if ALT key is pressed (and also not already dragging)
+    // or if the sticky note is dragged from top 10% of the frame
+    if (!m_dragging && (event.GetModifiers() == wxMOD_ALT || mousePos.y <= (GetSize().y * 0.1)))
+    {
+        CaptureMouse();
+        Bind(wxEVT_LEFT_UP, &StickyNote::OnMouseUp, this);
+        Bind(wxEVT_MOTION, &StickyNote::OnMouseMove, this);
+        m_dragging = true;
+
+        wxPoint screenPos = ClientToScreen(mousePos);
+        wxPoint origin = GetPosition();
+        int dx = screenPos.x - origin.x;
+        int dy = screenPos.y - origin.y;
+        m_delta = wxPoint(dx, dy);
+    }
+}
+
+void StickyNote::OnMouseUp(wxMouseEvent &event)
+{
+    FinishDrag();
+}
+
+void StickyNote::OnMouseMove(wxMouseEvent &event)
+{
+    wxPoint currentScreenPos = ClientToScreen(event.GetPosition());
+    // subtracing m_delta so the sticky note moves relative to mouse position
+    // setting the position as the currentScreenPos causes the note to snap the
+    // top left corner to the mouse position
+    SetPosition(wxPoint(currentScreenPos.x - m_delta.x, currentScreenPos.y - m_delta.y));
+}
+
+void StickyNote::OnMouseCaptureLost(wxMouseCaptureLostEvent &)
+{
+    FinishDrag();
+}
+
+void StickyNote::FinishDrag()
+{
+    if (m_dragging)
+    {
+        Unbind(wxEVT_LEFT_UP, &StickyNote::OnMouseUp, this);
+        Unbind(wxEVT_MOTION, &StickyNote::OnMouseMove, this);
+        m_dragging = false;
+    }
+
+    if (HasCapture())
+    {
+        ReleaseMouse();
+    }
+}
+void StickyNote::OnExit(wxMouseEvent &event)
+{
+    Close(true);
+}

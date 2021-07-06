@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/eliot/projects/cpp-chill-note/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9  -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -I/home/eliot/projects/cpp-chill-note/src -isystem /usr/local/lib/wx/include/gtk3-unicode-static-3.1 -isystem /usr/local/include/wx-3.1   -pthread -O2 -g -DNDEBUG   -o CMakeFiles/chill-note.dir/src/chillnoteApp.cpp.o -c /home/eliot/projects/cpp-chill-note/src/chillnoteApp.cpp",
+  "file": "/home/eliot/projects/cpp-chill-note/src/chillnoteApp.cpp"
+},
+{
+  "directory": "/home/eliot/projects/cpp-chill-note/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9  -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -I/home/eliot/projects/cpp-chill-note/src -isystem /usr/local/lib/wx/include/gtk3-unicode-static-3.1 -isystem /usr/local/include/wx-3.1   -pthread -O2 -g -DNDEBUG   -o CMakeFiles/chill-note.dir/src/stickynote.cpp.o -c /home/eliot/projects/cpp-chill-note/src/stickynote.cpp",
+  "file": "/home/eliot/projects/cpp-chill-note/src/stickynote.cpp"
+}
+]
