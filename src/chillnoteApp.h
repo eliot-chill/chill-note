@@ -15,8 +15,13 @@ public:
     ~ChillNoteApp();
 
 private:
-    StickyNote *note = nullptr;
-
-public:
     virtual bool OnInit();
+    void OnKeyDown(wxKeyEvent &evt);
+    void createStickyNote(long style);
+
+    wxColour generateRandomColour();
+
+    StickyNote *note = nullptr;
+    long defaultStyle;
+    wxDECLARE_EVENT_TABLE();
 };

@@ -1,3 +1,3 @@
-/home/eliot/projects/cpp-chill-note/build/CMakeFiles/rebuild_cache.dir
-/home/eliot/projects/cpp-chill-note/build/CMakeFiles/edit_cache.dir
-/home/eliot/projects/cpp-chill-note/build/CMakeFiles/chill-note.dir
+/home/eliot.cholerton-hill/projects/cpp/chill-note/build/CMakeFiles/rebuild_cache.dir
+/home/eliot.cholerton-hill/projects/cpp/chill-note/build/CMakeFiles/edit_cache.dir
+/home/eliot.cholerton-hill/projects/cpp/chill-note/build/CMakeFiles/chill-note.dir

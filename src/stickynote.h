@@ -8,7 +8,7 @@
 class StickyNote : public wxFrame
 {
 public:
-    StickyNote(const wxString &title, const wxPoint &pos, const wxSize &size, const long &style);
+    StickyNote(const wxString &title, const wxPoint &pos, const wxSize &size, const long &style, const wxColour &colour);
     ~StickyNote();
 
 private:
@@ -18,6 +18,7 @@ private:
     void OnMouseMove(wxMouseEvent &event);
     void OnMouseCaptureLost(wxMouseCaptureLostEvent &event);
     void FinishDrag();
+    wxColour GetContrastingFontColour(wxColour backgroundColour);
 
     wxPoint m_delta;
     bool m_dragging;

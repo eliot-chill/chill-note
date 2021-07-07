@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/chill-note.dir/src/chillnoteApp.cpp.o"
+  "CMakeFiles/chill-note.dir/src/chillnoteApp.cpp.o.d"
   "CMakeFiles/chill-note.dir/src/stickynote.cpp.o"
+  "CMakeFiles/chill-note.dir/src/stickynote.cpp.o.d"
   "chill-note"
   "chill-note.pdb"
 )

@@ -1,31 +1,50 @@
 #include <stickynote.h>
 
-wxBEGIN_EVENT_TABLE(StickyNote, wxFrame)
-    wxEND_EVENT_TABLE()
-
-        StickyNote::StickyNote(const wxString &title, const wxPoint &pos, const wxSize &size, const long &style) : wxFrame(NULL, wxID_ANY, title, pos, size, style)
+StickyNote::StickyNote(const wxString &title, const wxPoint &pos, const wxSize &size, const long &style, const wxColour &colour) : wxFrame(NULL, wxID_ANY, title, pos, size, style)
 {
     m_dragging = false;
     Bind(wxEVT_LEFT_DOWN, &StickyNote::OnMouseDown, this);
     Bind(wxEVT_MOUSE_CAPTURE_LOST, &StickyNote::OnMouseCaptureLost, this);
     Bind(wxEVT_RIGHT_DOWN, &StickyNote::OnExit, this);
-    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    SetSizer(sizer);
-    sizer->AddSpacer(size.y * 0.1);
 
-    wxTextCtrl *text = new wxTextCtrl(this, wxID_ANY, "TEST!", wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+    this->SetBackgroundColour(colour);
+
+    wxBoxSizer *v_sizer = new wxBoxSizer(wxVERTICAL);
+    SetSizer(v_sizer);
+    wxBoxSizer *h_sizer = new wxBoxSizer(wxHORIZONTAL);
+    v_sizer->Add(h_sizer);
+    wxButton *button = new wxButton(this, wxID_ANY, "+", wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+    button->SetBackgroundColour(colour);
+    h_sizer->AddSpacer(this->GetSize().GetX() * 0.8);
+    h_sizer->Add(button);
+
+    // sizer->AddSpacer(size.y * 0.1);
+
+    wxTextCtrl *text = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+    text->SetBackgroundColour(colour);
+    text->SetForegroundColour(GetContrastingFontColour(colour));
+    button->SetForegroundColour(GetContrastingFontColour(colour));
 
     wxFont font = text->GetFont();
     font.SetPointSize(font.GetPointSize() + 1);
+
     text->SetFont(font);
 
-    sizer->Add(text, wxSizerFlags().Expand().Proportion(1));
-    // wxButton *button = new wxButton(this, wxID_ANY, "Button");
-    // sizer->Add(button, wxSizerFlags().Expand().Proportion(1));
+    v_sizer->Add(text, wxSizerFlags().Expand().Proportion(1));
 }
 
 StickyNote::~StickyNote()
 {
+}
+
+wxColour StickyNote::GetContrastingFontColour(wxColour bgColour)
+{
+    // Set text colour based on luminance of bg colour
+    double luma = ((0.299 * bgColour.Red()) +
+                   (0.587 * bgColour.Green()) +
+                   (0.114 * bgColour.Blue())) /
+                  255;
+    return luma > 0.5 ? wxColour("black") : wxColour("white");
 }
 
 void StickyNote::OnMouseDown(wxMouseEvent &event)
@@ -86,3 +105,7 @@ void StickyNote::OnExit(wxMouseEvent &event)
 {
     Close(true);
 }
+
+// wxWidgets event table stuff
+wxBEGIN_EVENT_TABLE(StickyNote, wxFrame)
+    wxEND_EVENT_TABLE()
