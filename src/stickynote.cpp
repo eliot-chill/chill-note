@@ -11,19 +11,12 @@ StickyNote::StickyNote(const wxString &title, const wxPoint &pos, const wxSize &
 
     wxBoxSizer *v_sizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(v_sizer);
-    wxBoxSizer *h_sizer = new wxBoxSizer(wxHORIZONTAL);
-    v_sizer->Add(h_sizer);
-    wxButton *button = new wxButton(this, wxID_ANY, "+", wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
-    button->SetBackgroundColour(colour);
-    h_sizer->AddSpacer(this->GetSize().GetX() * 0.8);
-    h_sizer->Add(button);
-
-    // sizer->AddSpacer(size.y * 0.1);
+    TopBar *topBar = new TopBar(this);
+    v_sizer->Add(topBar);
 
     wxTextCtrl *text = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
     text->SetBackgroundColour(colour);
     text->SetForegroundColour(GetContrastingFontColour(colour));
-    button->SetForegroundColour(GetContrastingFontColour(colour));
 
     wxFont font = text->GetFont();
     font.SetPointSize(font.GetPointSize() + 1);

@@ -5,6 +5,8 @@
 #include <wx/wx.h> // In case we don't support precomp.
 #endif
 
+#include <topbar.h>
+
 class StickyNote : public wxFrame
 {
 public:
